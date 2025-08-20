@@ -4,11 +4,32 @@ import { useSession } from 'next-auth/react';
 import { useWallets, useWallet, useWalletBalances } from '@/app/axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BlockchainEnum } from '@/app/shared/types';
+import { BlockchainEnum, blockchainNames } from '@/app/shared/types';
 import { Content, LoadingWrapper } from '@/app/components';
 import Image from 'next/image';
 import { useCreateTransferMutation } from '@/app/axios/transactions';
 import { useW3sContext } from '@/app/providers/W3sProvider';
+import { blockchainMeta, tokenHelper } from '@/app/shared/utils';
+
+// Define a type for supported testnet blockchains
+type SupportedTestnet = 
+  | BlockchainEnum.MATIC_AMOY 
+  | BlockchainEnum.ETH_SEPOLIA 
+  | BlockchainEnum.AVAX_FUJI 
+  | BlockchainEnum.SOL_DEVNET;
+
+// Merchant addresses by blockchain (only testnets)
+const MERCHANT_ADDRESSES: Record<SupportedTestnet, string> = {
+  [BlockchainEnum.MATIC_AMOY]: '0xce8686244f66cd6576180ddb406a065f7f6e16f3',
+  [BlockchainEnum.ETH_SEPOLIA]: '0x75efbc20e4b1f9a5edd3b03c7b179e8710991458',
+  [BlockchainEnum.AVAX_FUJI]: '0x75efbc20e4b1f9a5edd3b03c7b179e8710991458',
+  [BlockchainEnum.SOL_DEVNET]: 'D8j86vqE3ERGb2Mt1aA6xPecb4L3sagfUNuD3JLRz5FC',
+};
+
+// Type guard to check if a blockchain is supported
+const isSupportedBlockchain = (blockchain: string): blockchain is SupportedTestnet => {
+  return Object.keys(MERCHANT_ADDRESSES).includes(blockchain);
+};
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -20,8 +41,6 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null);
   const { client } = useW3sContext();
   
-  const MERCHANT_ADDRESS = '0xb3afadfe63167826a993fc600ce811b8595e16e3';
-
   // Get the selected wallet details
   const { data: selectedWallet } = useWallet(selectedWalletId || '');
   
@@ -39,13 +58,23 @@ export default function CheckoutPage() {
     }
   }, [status, router]);
 
-  const polygonWallets = wallets?.data?.wallets?.filter(
-    wallet => wallet.blockchain === BlockchainEnum.MATIC_AMOY
-  );
+  // Get all wallets with USDC balance
+  const walletsWithBalance = wallets?.data?.wallets?.map(wallet => {
+    return {
+      ...wallet,
+      blockchainInfo: blockchainMeta(wallet.blockchain)
+    };
+  }) || [];
 
   const handlePayment = async () => {
-    if (!selectedWalletId) {
+    if (!selectedWalletId || !selectedWallet) {
       setError('Please select a wallet');
+      return;
+    }
+    
+    // Check if the wallet's blockchain is supported
+    if (!isSupportedBlockchain(selectedWallet.data.wallet.blockchain)) {
+      setError('Merchant does not accept payments on this blockchain');
       return;
     }
     
@@ -61,29 +90,36 @@ export default function CheckoutPage() {
     // Check if wallet has sufficient USDC balance
     const usdcBalance = parseFloat(usdcTokenBalance.amount);
     if (usdcBalance < cartTotal) {
-      setError(`Insufficient USDC balance. You need ${cartTotal} USDC but only have ${usdcBalance}`);
+      setError(`Insufficient USDC balance. You need ${cartTotal} USDC but only have ${usdcBalance.toFixed(2)}`);
       return;
     }
     
+    // Get merchant address for the selected wallet's blockchain
+    const merchantAddress = MERCHANT_ADDRESSES[selectedWallet.data.wallet.blockchain as SupportedTestnet];
+     if (!merchantAddress) {
+      setError('Merchant does not accept payments on this blockchain');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
     
     try {
       console.log('Payment details:', {
-        destinationAddress: MERCHANT_ADDRESS,
+        destinationAddress: merchantAddress,
         tokenId: usdcToken.id,
         walletId: selectedWalletId,
-        amounts: [cartTotal.toFixed(6)], // Use display units with 6 decimal places
+        amounts: [cartTotal.toFixed(6)],
         feeLevel: "LOW",
         cartTotal: cartTotal
       });
       
-      // Create actual payment transaction (use display units, not base units)
+      // Create actual payment transaction
       const { challengeId } = await createTransfer.mutateAsync({
-        destinationAddress: MERCHANT_ADDRESS,
+        destinationAddress: merchantAddress,
         tokenId: usdcToken.id,
         walletId: selectedWalletId,
-        amounts: [cartTotal.toFixed(6)], // Use display units with 6 decimal places
+        amounts: [cartTotal.toFixed(6)],
         feeLevel: "LOW"
       });
 
@@ -136,10 +172,10 @@ export default function CheckoutPage() {
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-medium mb-4">Pay with USDC</h2>
           <p className="text-gray-600 mb-4">
-            Select a Polygon Amoy wallet to complete your payment
+            Select a wallet to complete your payment
           </p>
           
-          {polygonWallets?.length === 0 ? (
+          {walletsWithBalance.length === 0 ? (
             <div className="text-center py-8">
               <Image
                 src="/NoWallet.svg"
@@ -149,7 +185,7 @@ export default function CheckoutPage() {
                 className="mx-auto mb-4"
               />
               <p className="text-gray-600 mb-4">
-                You don't have any Polygon Amoy wallets
+                You don't have any wallets with USDC
               </p>
               <button
                 onClick={() => router.push('/wallets/create')}
@@ -160,45 +196,16 @@ export default function CheckoutPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {polygonWallets?.map(wallet => {
-                // Get balance for display
-                const walletBalance = walletBalances?.data?.tokenBalances[0];
-                const displayBalance = walletBalance ? walletBalance.amount : '0.00';
-                
+              {walletsWithBalance.map(wallet => {
+                // For each wallet, we need to get its USDC balance
                 return (
-                  <div
+                  <WalletBalanceItem 
                     key={wallet.id}
-                    className={`border rounded-lg p-4 cursor-pointer ${
-                      selectedWalletId === wallet.id
-                        ? 'border-indigo-500 bg-indigo-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    onClick={() => setSelectedWalletId(wallet.id)}
-                  >
-                    <div className="flex items-center">
-                      <Image
-                        src="/Matic.svg"
-                        width={24}
-                        height={24}
-                        alt="Polygon"
-                        className="mr-3"
-                      />
-                      <div className="flex-1">
-                        <p className="font-medium">
-                          {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
-                        </p>
-                        <p className="text-sm text-gray-500">Polygon Amoy</p>
-                      </div>
-                      {selectedWalletId === wallet.id && (
-                        <div className="text-right">
-                          <p className="font-medium">
-                            {displayBalance} USDC
-                          </p>
-                          <p className="text-sm text-gray-500">Available</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                    wallet={wallet}
+                    isSelected={selectedWalletId === wallet.id}
+                    onSelect={() => setSelectedWalletId(wallet.id)}
+                    cartTotal={cartTotal}
+                  />
                 );
               })}
             </div>
@@ -231,3 +238,69 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+// Component to display wallet with balance and handle selection
+const WalletBalanceItem = ({ 
+  wallet, 
+  isSelected, 
+  onSelect, 
+  cartTotal 
+}: { 
+  wallet: any; 
+  isSelected: boolean;
+  onSelect: () => void;
+  cartTotal: number;
+}) => {
+  const { data: balances, isLoading } = useWalletBalances(wallet.id, { name: 'USDC' });
+  const usdcBalance = balances?.data?.tokenBalances[0]?.amount || '0';
+  const hasSufficientBalance = parseFloat(usdcBalance) >= cartTotal;
+  const isSupported = isSupportedBlockchain(wallet.blockchain);
+
+  return (
+    <div
+      className={`border rounded-lg p-4 cursor-pointer transition-all ${
+        isSelected
+          ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-200'
+          : 'border-gray-200 hover:border-gray-300'
+      } ${
+        !isSupported || !hasSufficientBalance ? 'opacity-60' : ''
+      }`}
+      onClick={isSupported && hasSufficientBalance ? onSelect : undefined}
+    >
+      <div className="flex items-center">
+        <Image
+          src={wallet.blockchainInfo.svg}
+          width={24}
+          height={24}
+          alt={wallet.blockchain}
+          className="mr-3"
+        />
+        <div className="flex-1">
+          <p className="font-medium">
+            {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
+          </p>
+          <p className="text-sm text-gray-500">
+            {blockchainNames[wallet.blockchain]}
+          </p>
+          {!isSupported && (
+            <p className="text-xs text-red-500 mt-1">
+              Merchant doesn't accept payments on this network
+            </p>
+          )}
+        </div>
+        {isLoading ? (
+          <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+        ) : (
+          <div className="text-right">
+            <p className="font-medium">
+              {usdcBalance} USDC
+            </p>
+            <p className={`text-sm ${hasSufficientBalance ? 'text-green-600' : 'text-red-500'}`}>
+              {hasSufficientBalance ? 'Sufficient' : 'Insufficient'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

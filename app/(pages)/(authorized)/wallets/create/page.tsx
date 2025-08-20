@@ -15,8 +15,7 @@ export default function CreateWalletPage() {
   const router = useRouter();
   const { client } = useW3sContext();
 
-  const previousWalletsCount = useRef<number>(0); // Ref to hold the previous value
-
+  const previousWalletsCount = useRef<number>(0);
   const [selected, setSelected] = useState<BlockchainEnum>();
   const [loading, setLoading] = useState(false);
 
@@ -26,33 +25,34 @@ export default function CreateWalletPage() {
   );
 
   useEffect(() => {
-    // make sure first wallet is created.
     if (
       previousWalletsCount?.current > 0 &&
       previousWalletsCount.current !== walletsQuery.data?.data.wallets.length
     ) {
       router.push("/wallets");
     }
-
     previousWalletsCount.current = walletsQuery.data?.data.wallets.length ?? 0;
   }, [router, walletsQuery.data?.data.wallets.length]);
 
   const createLoading = createWalletMutation.isLoading || loading;
 
+  // Group wallets by blockchain to show which ones user already has
+  const existingBlockchains = walletsQuery.data?.data.wallets.map(w => w.blockchain) || [];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Content>
         <nav className="mb-6">
-          <button
+          <BackButton 
             onClick={() => router.push("/wallets")}
-            className="text-indigo-600 hover:text-indigo-700 font-medium"
+            className="text-indigo-600 hover:text-indigo-700"
           >
-            ← Back to Wallets
-          </button>
+            Back to Wallets
+          </BackButton>
           <h1 className="text-2xl font-bold text-gray-900 mt-2">Create Wallet</h1>
         </nav>
 
-        <p className="text-gray-600 mb-6">Select a chain to deploy your wallet</p>
+        <p className="text-gray-600 mb-6">Select a blockchain to deploy your wallet</p>
 
         <div className="space-y-3 mb-8">
           {[
@@ -63,9 +63,10 @@ export default function CreateWalletPage() {
           ].map((blockchain) => {
             const isDisabled =
               createLoading ||
-              !!walletsQuery.data?.data.wallets.find(
-                (wallet) => wallet.blockchain === blockchain,
-              );
+              existingBlockchains.includes(blockchain);
+            
+            const blockchainInfo = blockchainMeta(blockchain);
+            
             return (
               <button
                 key={blockchain}
@@ -82,12 +83,22 @@ export default function CreateWalletPage() {
                 <div className="flex items-center">
                   <Image
                     alt={`${blockchain}-icon`}
-                    src={blockchainMeta(blockchain).svg}
+                    src={blockchainInfo.svg}
                     width={24}
                     height={24}
                     className="mr-3"
                   />
-                  <span>{blockchainNames[blockchain]}</span>
+                  <div className="text-left">
+                    <span className="block">{blockchainNames[blockchain]}</span>
+                    <span className="text-sm text-gray-500 block">
+                      {blockchainInfo.testnet}
+                    </span>
+                    {existingBlockchains.includes(blockchain) && (
+                      <span className="text-xs text-green-600 block mt-1">
+                        Wallet already exists
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {selected === blockchain && (
                   <CheckIcon className="h-5 w-5 text-indigo-600" />
@@ -95,6 +106,14 @@ export default function CreateWalletPage() {
               </button>
             );
           })}
+        </div>
+
+        <div className="bg-blue-50 p-4 rounded-lg mb-6">
+          <h3 className="font-medium text-blue-800 mb-2">Gas-Free Transactions</h3>
+          <p className="text-blue-700 text-sm">
+            All transactions on testnet are gas-free, powered by Circle's gas credits.
+            No need to worry about transaction fees during testing.
+          </p>
         </div>
 
         <div className="grow" />
@@ -106,7 +125,7 @@ export default function CreateWalletPage() {
         )}
 
         <button
-          disabled={!selected}
+          disabled={!selected || createLoading}
           onClick={async () => {
             if (selected) {
               const { data: challengeId } =
@@ -123,7 +142,7 @@ export default function CreateWalletPage() {
             }
           }}
           className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
-            !selected
+            !selected || createLoading
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-indigo-600 text-white hover:bg-indigo-700"
           }`}

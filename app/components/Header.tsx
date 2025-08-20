@@ -60,7 +60,7 @@ const Header = ({ activeLink }: HeaderProps) => {
             </li>
             <li>
               <Link 
-                href="/dashboard" 
+                href="/merchant/dashboard" 
                 className={`transition ${
                   currentActive === 'dashboard' 
                     ? 'text-indigo-600 font-medium border-b-2 border-indigo-600' 
