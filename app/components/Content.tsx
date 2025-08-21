@@ -1,9 +1,16 @@
 import React from "react";
 
-export const Content = ({ children }: { children: React.ReactNode }) => {
+interface ContentProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const Content: React.FC<ContentProps> = ({ children, className = "" }) => {
   return (
-    <div className='px-5 pb-4 h-full flex flex-col gap-y-4 overflow-auto'>
-      {children}
+    <div className={`p-6 ${className}`}>
+      <div className="max-w-4xl mx-auto">
+        {children}
+      </div>
     </div>
   );
 };

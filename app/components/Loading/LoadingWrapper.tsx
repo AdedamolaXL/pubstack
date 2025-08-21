@@ -12,7 +12,8 @@ export const LoadingWrapper: React.FC<LoadingWrapper> = ({
   return (
     <>
       {isLoading ? (
-        <div className="grid justify-center items-center mt-16">
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
         </div>
       ) : (
         children

@@ -34,15 +34,15 @@ export default function WalletPage() {
   }, [router, wallets]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6">
       <LoadingWrapper isLoading={loading}>
-        <div className="flex flex-col items-center justify-center h-full text-center">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-sm p-8 max-w-md mx-auto text-center">
           <Image
             src="/ErrorIcon.svg"
             height={100}
             width={100}
             alt="No wallets"
-            className="mb-4"
+            className="mb-6 mx-auto"
           />
           <p className="text-lg font-medium text-gray-900 mb-2">
             Something went wrong
@@ -52,7 +52,7 @@ export default function WalletPage() {
           </p>
           <button
             onClick={() => signOut()}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg"
           >
             Sign out
           </button>

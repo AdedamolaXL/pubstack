@@ -103,7 +103,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           {isSignIn ? "Welcome Back" : "Create Account"}
         </h1>
         <p className="opacity-90 mt-1">
-          {isSignIn ? "Sign in to continue" : "Join our crypto marketplace"}
+          {isSignIn ? "Sign in to continue" : "Shop on PushCart"}
         </p>
       </div>
       
