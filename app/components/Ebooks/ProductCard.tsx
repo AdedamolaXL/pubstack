@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image'
-import { Product } from '@/app/components/Catalog/ProductGrid';
+import { Product } from '@/app/components/Ebooks/ProductGrid';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { useCart } from '@/app/context/CardContext';
 
@@ -21,24 +21,27 @@ const ProductCard = ({ product }: ProductCardProps) => {
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PC9zdmc+"
         />
       </div>
       
       <div className="p-4">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start mb-2">
           <h3 className="font-semibold text-gray-900 line-clamp-2">{product.name}</h3>
           <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded">
             {product.category}
           </span>
         </div>
         
-        <p className="mt-2 text-gray-500 text-sm line-clamp-2">
+        <p className="text-gray-500 text-sm line-clamp-2 mb-3">
           {product.description}
         </p>
         
-        <div className="mt-3 flex items-center">
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+          <span>{product.format}</span>
+          <span>{product.pages} pages</span>
+        </div>
+        
+        <div className="flex items-center mb-3">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
               <StarIcon
@@ -56,11 +59,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </span>
         </div>
         
-        <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-bold text-gray-900">${product.price.toFixed(2)}</span>
             <div className="text-xs text-green-600 font-medium mt-1">
-              Pay with gasless USDC
+              Directly supports the author
             </div>
           </div>
           

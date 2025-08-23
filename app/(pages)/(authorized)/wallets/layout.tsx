@@ -16,5 +16,5 @@ export default async function RootLayout({
     redirect("/signin");
   }
 
-  return <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">{children}</div>;
+  return <div className="min-h-screen bg-white">{children}</div>;
 }

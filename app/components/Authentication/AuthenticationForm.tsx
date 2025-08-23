@@ -57,7 +57,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           }
         });
       } else {
-        router.push("/wallets");
+        router.push("/signin");
       }
       setLoading(false);
     }
@@ -103,7 +103,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           {isSignIn ? "Welcome Back" : "Create Account"}
         </h1>
         <p className="opacity-90 mt-1">
-          {isSignIn ? "Sign in to continue" : "Shop on PushCart"}
+          {isSignIn ? "Sign in to continue" : "Write on PubStack"}
         </p>
       </div>
       

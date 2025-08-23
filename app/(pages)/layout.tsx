@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CryptoCommerce | Gasless USDC Payments",
-  description: "Web2-like checkout experience with gasless USDC payments",
+  title: "Pubstack",
+  description: "Gasless USDC payments",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en" className={`${inter.variable} font-sans`}>
-      <body className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 antialiased">
+      <body className="min-h-screen bg-white text-dune-900 antialiased">
         <ClientProviders>
           <CartProvider>
             <div className="min-h-screen flex flex-col">

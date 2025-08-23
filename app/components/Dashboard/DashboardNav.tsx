@@ -5,19 +5,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
   ChartBarIcon, 
-  ShoppingBagIcon, 
+  BookOpenIcon, 
   Cog6ToothIcon,
-  UserGroupIcon 
+  UserGroupIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Dashboard', href: '/merchant/dashboard', icon: ChartBarIcon },
-  { name: 'Products', href: '/merchant/products', icon: ShoppingBagIcon },
-  { name: 'Customers', href: '/merchant/customers', icon: UserGroupIcon },
+  { name: 'My eBooks', href: '/merchant/ebooks', icon: BookOpenIcon },
+  { name: 'Readers', href: '/merchant/readers', icon: UserGroupIcon },
+  { name: 'Write New', href: '/merchant/write', icon: PencilIcon },
   { name: 'Settings', href: '/merchant/settings', icon: Cog6ToothIcon },
 ];
 
-export default function MerchantNav() {
+export default function DashboardNav() {
   const pathname = usePathname();
 
   return (

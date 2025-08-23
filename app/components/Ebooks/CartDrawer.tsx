@@ -19,7 +19,7 @@ const CartDrawer = () => {
     clearCart
   } = useCart();
 
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div 
@@ -46,7 +46,7 @@ const CartDrawer = () => {
           <div className="flex items-center justify-between p-4 border-b">
             <div className="flex items-center">
               <ShoppingCartIcon className="h-6 w-6 text-indigo-600 mr-2" />
-              <h2 className="text-lg font-semibold">Your Cart</h2>
+              <h2 className="text-lg font-semibold">Your eBook Cart</h2>
               <span className="ml-2 bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-0.5 rounded-full">
                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
               </span>
@@ -67,32 +67,32 @@ const CartDrawer = () => {
                 <ShoppingCartIcon className="h-16 w-16 text-gray-300 mb-4" />
                 <h3 className="text-xl font-medium text-gray-900 mb-2">Your cart is empty</h3>
                 <p className="text-gray-500 mb-6">
-                  Start shopping to add items to your cart
+                  Start browsing to add eBooks to your cart
                 </p>
                 <button
                   onClick={closeCart}
                   className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
                 >
-                  Continue Shopping
+                  Browse eBooks
                 </button>
               </div>
             ) : (
               <div className="space-y-4">
                 {cartItems.map(item => (
                   <div key={item.id} className="flex border-b pb-4">
-                    <div className="relative w-20 h-20 rounded-md overflow-hidden bg-gray-100">
+                    <div className="relative w-16 h-20 rounded-md overflow-hidden bg-gray-100">
                       <Image 
                         src={item.image} 
                         alt={item.name}
                         fill
                         className="object-cover"
-                        sizes="80px"
+                        sizes="64px"
                       />
                     </div>
                     
                     <div className="ml-4 flex-1">
                       <div className="flex justify-between">
-                        <h3 className="font-medium text-gray-900 line-clamp-1">{item.name}</h3>
+                        <h3 className="font-medium text-gray-900 line-clamp-2">{item.name}</h3>
                         <button 
                           onClick={() => removeFromCart(item.id)}
                           className="text-gray-400 hover:text-red-500"
@@ -103,6 +103,7 @@ const CartDrawer = () => {
                       </div>
                       
                       <p className="text-gray-500 text-sm mt-1">${item.price.toFixed(2)}</p>
+                      <p className="text-xs text-gray-400 mt-1">eBook</p>
                       
                       <div className="mt-2 flex items-center">
                         <button
@@ -138,38 +139,30 @@ const CartDrawer = () => {
                 <span className="font-semibold">${cartTotal.toFixed(2)}</span>
               </div>
               
-              <div className="flex justify-between mb-4">
-                <span className="text-gray-600">Shipping</span>
-                <span className="font-semibold text-green-600">Free</span>
-              </div>
-              
               <div className="flex justify-between mb-6 text-lg">
                 <span>Total</span>
                 <span className="font-bold">${cartTotal.toFixed(2)}</span>
               </div>
               
               <div className="space-y-2">
- <button
-    onClick={() => {
-      closeCart();
-      router.push('/checkout');
-    }}
-    className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium mt-2"
-  >
-    Proceed to Checkout
-  </button>
+                <button
+                  onClick={() => {
+                    closeCart();
+                    router.push('/checkout');
+                  }}
+                  className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium mt-2"
+                >
+                  Proceed to Checkout
+                </button>
                 
- 
-  <button
-    onClick={clearCart}
-    className="w-full flex items-center justify-center text-red-600 py-2 hover:text-red-700 transition font-medium"
-  >
-    <TrashIcon className="h-5 w-5 mr-1" />
-    Clear Cart
-  </button>
-
+                <button
+                  onClick={clearCart}
+                  className="w-full flex items-center justify-center text-red-600 py-2 hover:text-red-700 transition font-medium"
+                >
+                  <TrashIcon className="h-5 w-5 mr-1" />
+                  Clear Cart
+                </button>
               </div>
-
             </div>
           )}
         </div>

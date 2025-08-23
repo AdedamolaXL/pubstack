@@ -1,7 +1,21 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { Product } from '@/app/components/Catalog/ProductGrid';
+
+// Update product interface to reflect eBooks
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  author: string;
+  format: string; // eBook format (PDF, EPUB, etc.)
+  pages: number;
+  rating: number;
+  reviewCount: number;
+}
 
 interface CartItem extends Product {
   quantity: number;
@@ -27,7 +41,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     // Load cart from localStorage
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('cart');
+      const savedCart = localStorage.getItem('ebook-cart');
       return savedCart ? JSON.parse(savedCart) : [];
     }
     return [];
@@ -35,7 +49,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    localStorage.setItem('ebook-cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);

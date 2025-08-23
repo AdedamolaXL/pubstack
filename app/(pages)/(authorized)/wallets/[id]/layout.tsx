@@ -84,25 +84,25 @@ export default function WalletLayout({
   };
 
   return (
-     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+     <div className="min-h-screen bg-white">
       {/* Combined Header */}
-      <div className="bg-white/80 backdrop-blur-md border-b border-gray-200/70 w-full">
-        <div className="flex items-center justify-between p-4">
+      <div className="bg-white border-b border-gray-200 w-full">
+        <div className="flex items-center justify-between p-4 w-full">
           {/* PUSHCART on far left */}
           <Link 
             href="/signin" 
-            className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors flex-shrink-0"
+            className="flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors flex-shrink-0"
           >
-            <div className="p-2 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 shadow-sm">
-              <ShoppingCartIcon className="h-5 w-5 text-indigo-600" />
+            <div className="p-2 rounded-lg bg-primary-50">
+              
             </div>
-            <span className="font-bold text-lg">PUSHCART</span>
+            <span className="font-bold text-2xl font-serif">PubStack</span>
           </Link>
 
-          {/* Wallet Address centered with maximum space */}
-          <div className="flex items-center justify-center flex-grow mx-4 min-w-0">
-            <div className="flex items-center gap-4 bg-indigo-50/50 rounded-xl p-3 w-full max-w-4xl">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 shadow-sm flex-shrink-0">
+          {/* Wallet Address centered */}
+          <div className="flex items-center justify-center flex-1 mx-8 min-w-0">
+            <div className="flex items-center gap-4 bg-primary-50 rounded-lg p-3 max-w-md w-full">
+              <div className="p-2 rounded-lg bg-primary-100 flex-shrink-0">
                 {blockchainInfo.svg ? (
                   <Image
                     alt="blockchain"
@@ -112,42 +112,42 @@ export default function WalletLayout({
                     className="filter brightness-110"
                   />
                 ) : (
-                  <QuestionMarkCircleIcon className="h-6 w-6 text-indigo-400" />
+                  <QuestionMarkCircleIcon className="h-6 w-6 text-primary-400" />
                 )}
               </div>
 
               <div className="flex flex-col min-w-0 flex-grow">
                 <span className="text-xs text-gray-500 font-medium">Wallet Address</span>
                 <div className="flex items-center gap-2 justify-between w-full">
-                  <span className="text-sm font-medium text-gray-800 truncate flex-grow">
+                  <span className="text-sm font-medium text-dune-800 truncate flex-grow">
                     {walletAddress}
                   </span>
                   <CopyButton
                     copyValue={walletAddress}
                     variant="ghost"
-                    className="text-gray-600 hover:text-indigo-600 flex-shrink-0"
+                    className="text-gray-600 hover:text-primary-600 flex-shrink-0"
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Dropdown menu on right */}
+          {/* Dropdown menu on far right */}
           <div className="relative flex-shrink-0" ref={dropdownRef}>
             <button
               onClick={toggleDropdown}
               disabled={restorePin.isLoading}
-              className="p-2.5 rounded-xl bg-white shadow-sm border border-gray-200 hover:shadow-md transition-all disabled:opacity-50"
+              className="p-2.5 rounded-lg bg-white border border-gray-200 hover:shadow-md transition-all disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               {restorePin.isLoading ? (
-                <div className="h-5 w-5 animate-spin text-indigo-600">↻</div>
+                <div className="h-5 w-5 animate-spin text-primary-600">↻</div>
               ) : (
                 <EllipsisVerticalIcon className="h-5 w-5 text-gray-600" />
               )}
             </button>
 
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-200/70 origin-top-right z-10 overflow-hidden">
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 origin-top-right z-10 overflow-hidden">
                 <div className="py-1.5">
                   {wallets?.data.wallets.map((wallet) => {
                     if (wallet.id === params.id) return null;
@@ -158,7 +158,7 @@ export default function WalletLayout({
                           setIsDropdownOpen(false);
                           router.push(`/wallets/${wallet.id}`);
                         }}
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50/80 w-full text-left transition-colors"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 w-full text-left transition-colors focus:outline-none focus:bg-primary-50"
                       >
                         <Image
                           src={blockchainMeta(wallet.blockchain).svg}
@@ -176,21 +176,21 @@ export default function WalletLayout({
                       setIsDropdownOpen(false);
                       router.push("/wallets/create");
                     }}
-                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50/80 w-full text-left transition-colors"
+                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 w-full text-left transition-colors focus:outline-none focus:bg-primary-50"
                   >
                     <PlusIcon className="h-4 w-4 mr-2.5" />
                     Create new wallet
                   </button>
                   <button
                     onClick={handleChangePin}
-                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50/80 w-full text-left transition-colors"
+                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 w-full text-left transition-colors focus:outline-none focus:bg-primary-50"
                   >
                     <Cog6ToothIcon className="h-4 w-4 mr-2.5" />
                     Change Pin
                   </button>
                   <button
                     onClick={handleSignOut}
-                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50/80 w-full text-left transition-colors"
+                    className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 w-full text-left transition-colors focus:outline-none focus:bg-primary-50"
                   >
                     <ArrowRightStartOnRectangleIcon className="h-4 w-4 mr-2.5" />
                     Sign out
@@ -203,7 +203,7 @@ export default function WalletLayout({
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto p-4">
+      <div className="max-w-4xl mx-auto p-6">
         {children}
       </div>
     </div>
