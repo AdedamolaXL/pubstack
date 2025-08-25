@@ -88,7 +88,7 @@ export default function WalletLayout({
       {/* Combined Header */}
       <div className="bg-white border-b border-gray-200 w-full">
         <div className="flex items-center justify-between p-4 w-full">
-          {/* PUSHCART on far left */}
+          {/* PUBSTACK on far left */}
           <Link 
             href="/signin" 
             className="flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors flex-shrink-0"
