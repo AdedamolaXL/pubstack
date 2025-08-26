@@ -12,8 +12,16 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
 
+  const handleAddToCart = () => {
+    const cartProduct = {
+      ...product,
+      type: 'ebook' as const
+    };
+    addToCart(cartProduct);
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300">
       <div className="relative w-full h-48">
         <Image 
           src={product.image} 
@@ -26,17 +34,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="font-semibold text-gray-900 line-clamp-2">{product.name}</h3>
-          <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded">
+          <h3 className="font-semibold text-dune-900 line-clamp-2">{product.name}</h3>
+          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-3.5 py-1.5 rounded">
             {product.category}
           </span>
         </div>
         
-        <p className="text-gray-500 text-sm line-clamp-2 mb-3">
+        <p className="text-dune-700 text-sm line-clamp-2 mb-3">
           {product.description}
         </p>
         
-        <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+        <div className="flex items-center justify-between text-xs text-dune-500 mb-3">
           <span>{product.format}</span>
           <span>{product.pages} pages</span>
         </div>
@@ -54,22 +62,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
               />
             ))}
           </div>
-          <span className="ml-2 text-sm text-gray-500">
+          <span className="ml-2 text-sm text-dune-500">
             {product.rating} ({product.reviewCount})
           </span>
         </div>
         
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-lg font-bold text-gray-900">${product.price.toFixed(2)}</span>
-            <div className="text-xs text-green-600 font-medium mt-1">
-              Directly supports the author
-            </div>
+            <span className="text-lg font-bold text-dune-900">${product.price.toFixed(2)}</span>
           </div>
           
           <button 
-            onClick={() => addToCart(product)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition font-medium"
+            onClick={handleAddToCart}
+            className="px-2 py-2 bg-primary-500 text-white rounded-lg text-sm hover:bg-primary-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             aria-label={`Add ${product.name} to cart`}
           >
             Add to Cart

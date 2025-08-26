@@ -1,14 +1,11 @@
+'use client';
 import { Metadata } from 'next';
 import Header from '@/app/components/Header';
 import { Footer } from '@/app/components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CheckCircleIcon, ClockIcon, UserGroupIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
-
-export const metadata: Metadata = {
-  title: 'AuthorWorks | Mentorship & Coaching',
-  description: 'Elevate your writing with personalized mentorship, classes, and 1-on-1 coaching sessions',
-};
+import { useCart } from '@/app/context/CardContext';
 
 const mentorshipOfferings = [
   {
@@ -44,7 +41,7 @@ const mentorshipOfferings = [
       'Distribution platforms overview',
       'Q&A with successful indie authors'
     ],
-    image: 'https://images.unsplash.com/photo-1542587227-8802645dbe10?auto=format&fit=crop&w=600&h=400&q=80',
+    image: 'https://images.unsplash.com/photo-1698434156440-df22e73ff5bd?auto=format&fit=crop&w=600&h=400&q=80',
     schedule: 'Bi-weekly cohorts'
   },
   {
@@ -86,6 +83,26 @@ const mentorshipOfferings = [
 ];
 
 export default function Mentorship() {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (offering: any) => {
+    // Convert mentorship offering to cart product format
+    const cartProduct = {
+      id: offering.id,
+      name: offering.title,
+      price: offering.price,
+      description: offering.description,
+      image: offering.image,
+      type: 'mentorship' as const,
+      duration: offering.duration,
+      formatType: offering.format,
+      features: offering.features,
+      schedule: offering.schedule
+    };
+    
+    addToCart(cartProduct);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header activeLink="mentorship" />
@@ -169,7 +186,10 @@ export default function Mentorship() {
                   ))}
                 </ul>
                 
-                <button className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                <button 
+                  onClick={() => handleAddToCart(offering)}
+                  className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
                   Add to Cart
                 </button>
               </div>

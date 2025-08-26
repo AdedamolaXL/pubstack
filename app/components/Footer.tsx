@@ -6,7 +6,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-serif font-semibold mb-4">Pubstack</h3>
             <p className="text-gray-400 text-sm">
-              Supporting independent creative writing through blockchain technology.
+              Supporting independent creative writing
             </p>
           </div>
           
@@ -43,10 +43,7 @@ export const Footer = () => {
         
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2025 AuthorWorks. All rights reserved.
-          </p>
-          <p className="text-gray-400 text-sm mt-2 md:mt-0">
-            Supporting creators with Circle, Polygon, and Web3 Authentication
+            © 2025 Pubstack. All rights reserved.
           </p>
         </div>
       </div>

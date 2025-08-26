@@ -1,23 +1,31 @@
+// app/context/CardContext.tsx
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-// Update product interface to reflect eBooks
+// Update product interface to support both eBooks and mentorship
 export interface Product {
   id: string;
   name: string;
   price: number;
   description: string;
-  category: string;
   image: string;
-  author: string;
-  format: string; // eBook format (PDF, EPUB, etc.)
-  pages: number;
-  rating: number;
-  reviewCount: number;
+  type: 'ebook' | 'mentorship';
+  // eBook specific properties (optional)
+  category?: string;
+  author?: string;
+  format?: string;
+  pages?: number;
+  rating?: number;
+  reviewCount?: number;
+  // Mentorship specific properties (optional)
+  duration?: string;
+  formatType?: string;
+  features?: string[];
+  schedule?: string;
 }
 
-interface CartItem extends Product {
+export interface CartItem extends Product {
   quantity: number;
 }
 
@@ -41,7 +49,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     // Load cart from localStorage
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('ebook-cart');
+      const savedCart = localStorage.getItem('pubstack-cart');
       return savedCart ? JSON.parse(savedCart) : [];
     }
     return [];
@@ -49,7 +57,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('ebook-cart', JSON.stringify(cartItems));
+    localStorage.setItem('pubstack-cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
@@ -124,6 +132,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// Export the useCart hook
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {
@@ -131,3 +140,6 @@ export const useCart = () => {
   }
   return context;
 };
+
+// Default export for easier imports
+export default CartContext;

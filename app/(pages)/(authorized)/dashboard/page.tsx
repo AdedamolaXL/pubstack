@@ -17,7 +17,7 @@ import {
   GiftIcon
 } from '@heroicons/react/24/outline';
 import { LoadingWrapper } from '@/app/components';
-import DashboardNav from '@/app/components/Dashboard/DashboardNav';
+import Header from '@/app/components/Header';
 
 // Mock data for author dashboard
 const dashboardData = {
@@ -108,7 +108,7 @@ export default function AuthorDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardNav />
+      <Header />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

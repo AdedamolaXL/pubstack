@@ -96,70 +96,70 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
     }
   };
   return (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-gray-100 p-4">
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white text-center">
-        <h1 className="text-2xl font-bold">
-          {isSignIn ? "Welcome Back" : "Create Account"}
-        </h1>
-        <p className="opacity-90 mt-1">
-          {isSignIn ? "Sign in to continue" : "Write on PubStack"}
-        </p>
-      </div>
-      
-      <div className="p-6">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <TextField
-            placeholder="Email address"
-            type="email"
-            error={!!formState.errors.email?.message}
-            helperText={formState.errors.email?.message}
-            {...register("email")}
-          />
-          
-          <TextField
-            placeholder="Password"
-            type={isMasked ? "password" : "text"}
-            error={!!formState.errors.password?.message}
-            helperText={formState.errors.password?.message}
-            endDecorator={
-              <button 
-                type="button"
-                onClick={() => setIsMasked((f) => !f)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                {isMasked ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-              </button>
-            }
-            {...register("password")}
-          />
-          
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
-            disabled={loading}
-          >
-            {loading ? "Processing..." : isSignIn ? "Sign In" : "Create Account"}
-          </button>
-          
-          {formMessage && (
-            <div className="text-red-500 text-center text-sm py-2">
-              {formMessage}
-            </div>
-          )}
-        </form>
+    <div className="min-h-screen flex items-center justify-center bg-white p-4">
+      <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-primary-500 p-6 text-white text-center">
+          <h1 className="text-2xl font-serif font-bold">
+            {isSignIn ? "Welcome Back" : "Create Account"}
+          </h1>
+          <p className="opacity-90 mt-1">
+            {isSignIn ? "Sign in to continue" : "Join PubStack today"}
+          </p>
+        </div>
         
-        <div className="mt-6 text-center text-sm text-gray-600">
-          {isSignIn ? "Don't have an account?" : "Already have an account?"}
-          <button
-            onClick={isSignIn ? () => router.push("/signup") : () => router.push("/login")}
-            className="ml-1 text-indigo-600 font-medium hover:underline"
-          >
-            {isSignIn ? "Sign Up" : "Sign In"}
-          </button>
+        <div className="p-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <TextField
+              placeholder="Email address"
+              type="email"
+              error={!!formState.errors.email?.message}
+              helperText={formState.errors.email?.message}
+              {...register("email")}
+            />
+            
+            <TextField
+              placeholder="Password"
+              type={isMasked ? "password" : "text"}
+              error={!!formState.errors.password?.message}
+              helperText={formState.errors.password?.message}
+              endDecorator={
+                <button 
+                  type="button"
+                  onClick={() => setIsMasked((f) => !f)}
+                  className="text-dune-500 hover:text-dune-700"
+                >
+                  {isMasked ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+                </button>
+              }
+              {...register("password")}
+            />
+            
+            <button
+              type="submit"
+              className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              disabled={loading}
+            >
+              {loading ? "Processing..." : isSignIn ? "Sign In" : "Create Account"}
+            </button>
+            
+            {formMessage && (
+              <div className="text-red-500 text-center text-sm py-2">
+                {formMessage}
+              </div>
+            )}
+          </form>
+          
+          <div className="mt-6 text-center text-sm text-dune-600">
+            {isSignIn ? "Don't have an account?" : "Already have an account?"}
+            <button
+              onClick={isSignIn ? () => router.push("/signup") : () => router.push("/login")}
+              className="ml-1 text-primary-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded"
+            >
+              {isSignIn ? "Sign Up" : "Sign In"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 };

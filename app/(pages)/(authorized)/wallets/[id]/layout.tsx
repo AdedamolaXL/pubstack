@@ -1,27 +1,23 @@
 "use client";
 import { CopyButton } from "@/app/components";
 import { useW3sContext } from '@/app/providers/W3sProvider'
-import { blockchainMeta, getAddressAbbreviation } from "@/app/shared/utils";
+import { blockchainMeta } from "@/app/shared/utils";
 import { signOut } from "next-auth/react";
 import { useRestorePinMutation, useWallet, useWallets } from "@/app/axios";
+import { blockchainNames } from "@/app/shared/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 import {
   ArrowRightStartOnRectangleIcon,
   Cog6ToothIcon,
   EllipsisVerticalIcon,
   PlusIcon,
   QuestionMarkCircleIcon,
-  ShoppingCartIcon,
 } from "@heroicons/react/16/solid";
-import { useRouter } from "next/navigation";
-import { blockchainNames } from "@/app/shared/types";
-import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
 
 type WalletLayoutParams = {
-  /*
-   * Wallet id.
-   */
   id: string;
 };
 
@@ -43,7 +39,6 @@ export default function WalletLayout({
   const blockchainInfo = blockchainMeta(wallet?.data.wallet.blockchain);
   const walletAddress = wallet?.data.wallet.address ?? "";
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -63,11 +58,8 @@ export default function WalletLayout({
 
     client?.execute(challengeId, (error) => {
       if (!error) {
-        // handle successful changing of pin.
         alert("Your pin has successfully been reset");
       }
-
-      // handle change pin error (e.g. user closed out, bad answers, etc).
     });
   };
 
@@ -84,10 +76,12 @@ export default function WalletLayout({
   };
 
   return (
-     <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
+      
       {/* Combined Header */}
       <div className="bg-white border-b border-gray-200 w-full">
         <div className="flex items-center justify-between p-4 w-full">
+
           {/* PUBSTACK on far left */}
           <Link 
             href="/signin" 

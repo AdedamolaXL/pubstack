@@ -10,7 +10,7 @@ export default async function SigninPage() {
     : false;
 
   if (session && isValidOnboardStatus) {
-    redirect("/wallets");
+    redirect("/signin");
   }
 
   return <AuthenticationForm />;

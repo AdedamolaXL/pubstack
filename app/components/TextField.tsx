@@ -14,7 +14,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <div className="w-full mb-4">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-dune-700 mb-2">
             {label}
           </label>
         )}
@@ -26,7 +26,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           )}
           <input
             ref={ref}
-            className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition ${
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition ${
               error 
                 ? "border-red-300 focus:ring-red-500 focus:border-red-500" 
                 : "border-gray-300"
@@ -42,7 +42,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {helperText && (
           <p
             className={`mt-2 text-sm flex items-center gap-1 ${
-              error ? "text-red-600" : "text-gray-500"
+              error ? "text-red-600" : "text-dune-500"
             }`}
           >
             {error && <InformationCircleIcon className="h-4 w-4" />}
