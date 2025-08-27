@@ -111,7 +111,7 @@ export default function CreateWalletPage() {
         <div className="bg-blue-50 p-4 rounded-lg mb-6">
           <h3 className="font-medium text-blue-800 mb-2">Gas-Free Transactions</h3>
           <p className="text-blue-700 text-sm">
-            All transactions on testnet are gas-free, powered by Circle's gas credits.
+            All transactions on testnet are gas-free, powered by Circle&apos;s gas credits.
             No need to worry about transaction fees during testing.
           </p>
         </div>

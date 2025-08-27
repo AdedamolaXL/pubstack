@@ -197,20 +197,20 @@ export default function Mentorship() {
           ))}
         </div>
 
-        {/* Testimonials Section */}
+          {/* Testimonials Section */}
         <div className="bg-primary-50 rounded-lg p-8 mb-16">
           <h2 className="text-2xl font-serif font-bold text-dune-900 mb-6 text-center">What Writers Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <p className="text-dune-700 italic mb-4">"The manuscript critique completely transformed my novel. The feedback was insightful and actionable."</p>
+              <p className="text-dune-700 italic mb-4">&ldquo;The manuscript critique completely transformed my novel. The feedback was insightful and actionable.&rdquo;</p>
               <p className="text-sm font-medium text-dune-900">- Sarah J., Fiction Writer</p>
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <p className="text-dune-700 italic mb-4">"The masterclass gave me the confidence and tools I needed to finally finish my first book."</p>
+              <p className="text-dune-700 italic mb-4">&ldquo;The masterclass gave me the confidence and tools I needed to finally finish my first book.&rdquo;</p>
               <p className="text-sm font-medium text-dune-900">- Michael T., Aspiring Author</p>
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <p className="text-dune-700 italic mb-4">"The career strategy session helped me develop a clear path forward for my writing business."</p>
+              <p className="text-dune-700 italic mb-4">&ldquo;The career strategy session helped me develop a clear path forward for my writing business.&rdquo;</p>
               <p className="text-sm font-medium text-dune-900">- Jennifer L., Non-Fiction Writer</p>
             </div>
           </div>
@@ -225,7 +225,26 @@ export default function Mentorship() {
               <p className="text-dune-700">Group classes are conducted via video conference with a maximum of 10 participants. Each session includes instruction, exercises, and Q&A. Recordings are available if you miss a session.</p>
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-dune-900 mb-2">What's your cancellation policy?</h3>
+              <h3 className="text-lg font-medium text-dune-900 mb-2">What&rsquo;s your cancellation policy?</h3>
+              <p className="text-dune-700">You can cancel or reschedule 1-on-1 sessions with 24 hours notice. For group classes, we offer a full refund if canceled at least 7 days before the start date.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium text-dune-900 mb-2">Do you offer payment plans?</h3>
+              <p className="text-dune-700">Yes, we offer payment plans for all classes over $200. Please contact us for details.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-serif font-bold text-dune-900 mb-6 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4 max-w-3xl mx-auto">
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium text-dune-900 mb-2">How do the group classes work?</h3>
+              <p className="text-dune-700">Group classes are conducted via video conference with a maximum of 10 participants. Each session includes instruction, exercises, and Q&A. Recordings are available if you miss a session.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium text-dune-900 mb-2">Do you have a cancellation policy?</h3>
               <p className="text-dune-700">You can cancel or reschedule 1-on-1 sessions with 24 hours notice. For group classes, we offer a full refund if canceled at least 7 days before the start date.</p>
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">

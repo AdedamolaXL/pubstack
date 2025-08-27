@@ -70,10 +70,14 @@ export default function AuthorDashboard() {
   const router = useRouter();
   const [timeRange, setTimeRange] = useState('7d');
 
-  if (status === 'loading') {
-    return <LoadingWrapper isLoading={true} children={undefined} />;
-  }
-
+   if (status === 'loading') {
+    return (
+      <LoadingWrapper isLoading={true}>
+        <></> {/* Empty fragment as children */}
+      </LoadingWrapper>
+    );
+   }
+  
   if (!session) {
     router.push('/signin');
     return null;

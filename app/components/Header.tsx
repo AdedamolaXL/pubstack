@@ -146,7 +146,7 @@ const Header = ({ activeLink }: HeaderProps) => {
                   <UserCircleIcon className="h-18 w-18 text-primary-600" />
                 </div>
                 <span className="hidden md:block text-sm font-medium text-dune-700">
-                  {session.user?.name || session.user?.email}
+                  {session && (session.user?.name || session.user?.email)}
                 </span>
               </button>
 

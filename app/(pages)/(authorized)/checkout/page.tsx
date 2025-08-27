@@ -143,35 +143,39 @@ export default function CheckoutPage() {
   };
 
   if (status === 'loading') {
-    return <LoadingWrapper isLoading={true} children={undefined} />;
+    return (
+      <LoadingWrapper isLoading={true}>
+        <div></div>
+      </LoadingWrapper>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Checkout</h1>
+        <h1 className="text-2xl font-bold text-dune-900 mb-6">Checkout</h1>
         
         {/* Cart Summary */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-lg font-medium mb-4">Order Summary</h2>
+        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+          <h2 className="text-lg font-medium text-dune-900 mb-4">Order Summary</h2>
           <ul className="divide-y divide-gray-200">
             {cartItems.map(item => (
               <li key={item.id} className="py-4 flex justify-between">
-                <span>{item.name} x {item.quantity}</span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                <span className="text-dune-700">{item.name} x {item.quantity}</span>
+                <span className="text-dune-900 font-medium">${(item.price * item.quantity).toFixed(2)}</span>
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex justify-between font-bold">
+          <div className="mt-4 flex justify-between font-bold text-dune-900">
             <span>Total:</span>
             <span>${cartTotal.toFixed(2)} USDC</span>
           </div>
         </div>
 
         {/* Wallet Selection */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-lg font-medium mb-4">Pay with USDC</h2>
-          <p className="text-gray-600 mb-4">
+        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+          <h2 className="text-lg font-medium text-dune-900 mb-4">Pay with USDC</h2>
+          <p className="text-dune-600 mb-4">
             Select a wallet to complete your payment
           </p>
           
@@ -184,12 +188,12 @@ export default function CheckoutPage() {
                 alt="No wallets"
                 className="mx-auto mb-4"
               />
-              <p className="text-gray-600 mb-4">
-                You don't have any wallets with USDC
+              <p className="text-dune-600 mb-4">
+                You don&apos;t have any wallets with USDC
               </p>
               <button
                 onClick={() => router.push('/wallets/create')}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
               >
                 Create Wallet
               </button>
@@ -216,10 +220,10 @@ export default function CheckoutPage() {
         <button
           onClick={handlePayment}
           disabled={!selectedWalletId || isProcessing}
-          className={`w-full py-3 rounded-lg font-medium ${
+          className={`w-full py-3 rounded-lg font-medium transition-colors ${
             !selectedWalletId || isProcessing
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              : 'bg-primary-500 text-white hover:bg-primary-600'
           }`}
         >
           {isProcessing ? 'Processing Payment...' : 'Pay with USDC'}
@@ -230,7 +234,7 @@ export default function CheckoutPage() {
         )}
 
         {isProcessing && (
-          <div className="mt-4 text-center text-gray-600">
+          <div className="mt-4 text-center text-dune-600">
             <p>Confirming transaction in your wallet...</p>
           </div>
         )}
@@ -260,7 +264,7 @@ const WalletBalanceItem = ({
     <div
       className={`border rounded-lg p-4 cursor-pointer transition-all ${
         isSelected
-          ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-200'
+          ? 'border-primary-500 bg-primary-50 ring-2 ring-primary-200'
           : 'border-gray-200 hover:border-gray-300'
       } ${
         !isSupported || !hasSufficientBalance ? 'opacity-60' : ''
@@ -276,15 +280,15 @@ const WalletBalanceItem = ({
           className="mr-3"
         />
         <div className="flex-1">
-          <p className="font-medium">
+          <p className="font-medium text-dune-900">
             {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-dune-600">
             {blockchainNames[wallet.blockchain]}
           </p>
           {!isSupported && (
             <p className="text-xs text-red-500 mt-1">
-              Merchant doesn't accept payments on this network
+              Merchant doesn&apos;t accept payments on this network
             </p>
           )}
         </div>
@@ -292,7 +296,7 @@ const WalletBalanceItem = ({
           <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
         ) : (
           <div className="text-right">
-            <p className="font-medium">
+            <p className="font-medium text-dune-900">
               {usdcBalance} USDC
             </p>
             <p className={`text-sm ${hasSufficientBalance ? 'text-green-600' : 'text-red-500'}`}>

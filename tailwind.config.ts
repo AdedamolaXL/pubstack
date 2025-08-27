@@ -44,8 +44,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-        serif: ['Lora', 'ui-serif', 'Georgia'], // Substack-like serif font
+        sans: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['ui-serif', 'Georgia', 'serif'],
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(to right, #FF6719, #E65C00)',
