@@ -35,7 +35,7 @@ Through the simplicity of PUBSTACK's checkout flow; we hypothesize that introduc
 - Expanding audiences by removing geographic payment barriers.
 - Reducing overhead for creators and platforms alike.
 
-## Solution: PUBSTACK
+## Solution Statement
 
 PUBSTACK is a creator-focused platform that integrates Circle Wallets and Gas Station to deliver frictionless, borderless payments in USDC.
 
@@ -57,49 +57,47 @@ How It Works
 - USDC is routed directly to the creator’s wallet, provisioned via Circle’s Wallet-as-a-Service.
 - Creator accesses funds instantly, with no payout delays or middlemen.
 
-## CORE FUNCTIONS:
+## Functional Architecture
 
-### 1. User Onboarding & Authentication
-- Email/password registration and login
-- Seamless wallet creation during onboarding
-- Session management with JWT tokens
-- PIN security setup for wallet operations
+### User Journeys:
 
-### 2. Multi-Chain Wallet Management
-- Programmable wallet creation across 4 testnets:
-  - Polygon Amoy
-  - Ethereum Sepolia
-  - Avalanche Fuji
-  - Solana Devnet
-- Native token and USDC balance monitoring
-- Deposit addresses and QR codes
-- Transaction history with status tracking
+ - Sign Up / Sign In:
+    - Frontend form → Backend /onboarding routes → Circle User + Wallet created.
+- Browse / Add to Cart:
+    - Goods are shown from a content DB (can be mocked for MVP).
+- Checkout:
+    - Frontend calls backend /transactions/create.
+    - Backend invokes Circle SDK for transaction (with gas abstracted).
+- Wallet Management:
+  - Frontend can show balances (via /wallets/:id/balance).
+  - Testnet USDC faucet for demoing.
+ 
+## Logical Architecture
 
-### 3. Creator Marketplace
-- Product catalog for digital goods (ebooks, mentorship)
-- Shopping cart with persistent storage
-- Shopping cart experience with quantity management
-- Merchant-specific payment addresses per blockchain
+### Frontend (Next.js/React, in your repo)
+- Wallet connect UI (sign up/sign in).
+- Storefront UI (list, cart, checkout).
+- Calls backend APIs for wallet + transaction ops.
 
-### 4. Gasless Checkout Flow
-- USDC balance validation pre-purchase
-- One-click gasless transactions
-- Real-time payment status updates
-- Automated order confirmation and cart clearing
+### Backend (Express + Circle SDK)
+- controllers/onboarding.ts: user lifecycle (create, login, PIN setup).
+- controllers/wallets.ts: wallet ops (list, balance, create).
+- controllers/transactions.ts: transaction lifecycle (create, get, list).
+- controllers/faucet.ts: drip testnet USDC.
+- Middleware: schema validation, auth, error handler.
+- Services: Circle SDK wrappers.
 
-### 5. Creator Dashboard
-- Sales analytics and revenue tracking
-- Payment method analytics (USDC vs traditional)
--Gas savings calculations
--Customer management and order history
+### Circle Infra
+- User-Controlled Wallets API: abstracts wallet creation & custody.
+- Paymaster: pays gas on behalf of user.
+- USDC on-chain settlement: actual stablecoin payments.
 
-## Overview
+## ARCHITECTURAL DIAGRAM
+<img width="1313" height="994" alt="mermaid-diagram-2025-08-30-081659" src="https://github.com/user-attachments/assets/fd42bdc8-5645-4939-b99f-d01b449b9064" />
 
-User-Controlled Wallets Sample App showcases the integration of Circle's Web3 Services products (Web SDK, [Smart Contract Accounts (SCA)](https://developers.circle.com/w3s/docs/programmable-wallets-account-types) user-controlled wallets, gasless transactions). You can download and easily run and configure for your own projects. The use case it will be supporting is integrating user-controlled wallets into an existing web application, so that you can provide wallets to your end users.
+## Get Started
 
-This is a sample frontend UI that plays a part in the larger Sample App project. We use [Circle Web3 Services Web SDK](https://developers.circle.com/w3s/docs/web) to protect users' sensitive data like PINs or security answers, which will be used to interact with Circle APIs for [User-Controlled Wallets](https://developers.circle.com/w3s/reference/createuser).
-
-## Prerequisites
+### Prerequisites
 
 1. Sign up for [Circle's Dev Console](https://developers.circle.com/w3s/docs/circle-developer-account) to obtain an [App ID](https://console.circle.com/wallets/user/configurator). Side Bar Navigation: Programmable Wallets / User Controlled / Configurator
 
@@ -107,12 +105,10 @@ This is a sample frontend UI that plays a part in the larger Sample App project.
 
 3. **_Important:_** Set up the [Sample Server](https://github.com/circlefin/w3s-sample-user-controlled-server-node) as well to get the end-to-end experience. Please be aware that the [SDK user token](https://developers.circle.com/w3s/reference/getusertoken) will expire after 60 minutes.
 
-## Configure the Sample App
+### Configure the Sample App
 
 1. Run `yarn env:config`, and you will see a `.env` file generated in the root directory
 2. Paste your [App ID](https://console.circle.com/wallets/user/configurator) with `[APP_ID goes here]` in the `.env` file.
-
-## Get Started
 
 Run the following commands to start the UI at `localhost:3000`:
 
@@ -126,16 +122,11 @@ yarn dev
 2. `yarn install`: install dependencies.
 3. `yarn dev`: run the server, hot reload is supported.
 
-## Architecture
-
-The frontend UI will play the role as `Your Application`, see [details](<https://developers.circle.com/w3s/docs/sdk-architecture-for-user-controlled-wallets#sdk-architecture>).
-![image](https://files.readme.io/a2a1678-SDK_UserC_Wallets_Sequence__Detailed2x.png)
-
 ## Code Structure
 
-We use [Next.js](https://nextjs.org/) as [React](https://react.dev/) framework and [Joy UI](https://mui.com/joy-ui/getting-started/) as React component library.
+We use NextJs and TailwindCSS, and deployed to Vercel.
 
-- The main logic to interact with the Circle Web3 Services Web SDK is going to be in our client side component in `app/components`:
+- The main logic to interact with the Circle Web3 Services Web SDK in our client side component is in:
   - `providers/W3sProvider.tsx`: holds the value to setup and instantiate a SDK instance. Part of the setup is authorizing with the App ID,
   
       ```javascript
@@ -181,11 +172,3 @@ We use [Next.js](https://nextjs.org/) as [React](https://react.dev/) framework a
 - `app/(pages)` contains all the server side pages of this Next.js application. Any directory wrapped in `()` is a [route grouping](https://nextjs.org/docs/app/building-your-application/routing/route-groups).
   - `(authorized)/`: all server side pages that can only be viewed if the user has a valid session. Check out `(authorized)/layout.ts` to see session validation.
 - The above are the most important files to get an understanding of this application. All other files are specific to this application and not crucial to using Circle Web3 Services Web SDK.
-
-**Happy Coding!**
-
-## Additional Resources
-  
-- [Circle Web3 Services Web SDK](https://developers.circle.com/w3s/docs/web-sdk-ui-customizations) supports UI customization, check [more examples](https://github.com/circlefin/w3s-pw-web-sdk).
-- Need help: <customer-support@circle.com>
-- Join our Discord community: <https://discord.com/invite/buildoncircle>
