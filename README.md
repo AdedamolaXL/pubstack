@@ -171,4 +171,3 @@ We use NextJs and TailwindCSS, and deployed to Vercel.
 
 - `app/(pages)` contains all the server side pages of this Next.js application. Any directory wrapped in `()` is a [route grouping](https://nextjs.org/docs/app/building-your-application/routing/route-groups).
   - `(authorized)/`: all server side pages that can only be viewed if the user has a valid session. Check out `(authorized)/layout.ts` to see session validation.
-- The above are the most important files to get an understanding of this application. All other files are specific to this application and not crucial to using Circle Web3 Services Web SDK.
