@@ -1,6 +1,97 @@
-# Circle User-Controlled Wallets Sample App - Frontend UI
+# PUBSTACK
 
 Check out the [live demo](https://user-controlled-wallets-sample-app.circle.com/) first to see what to expect!
+
+## Problem Background
+
+Crypto's promise has always been borderless, censorship-resistant payments. Yet after 5 years of broader adoption, users still face double friction: paying for a product and sourcing native gas tokens. The impact of this is that: users drops off at checkout and businesses lose customers. 
+
+Circle’s gasless payment system eliminates this hurdle. Users typically only need USDC (a stable, familiar currency) and gas is abstracted by the platform (sponsored via Paymaster). This simple looking process breaks the UX barriers for a global payment system driven by crypto. While, at the same time being transformative for the average online business whose users are typically not crypto-savvy.
+
+For the purpose of this hackathon, we built PUBSTACK, a creator-focused platform. We chose this direction because creators; whether independent operators on their own sites or writers on aggregators like Substack and Medium represent niche businesses with significant, though highly uneven, revenue potential.
+
+A quick survey of 2024 creator earnings shows this spectrum clearly:
+
+- Online courses, where creators earn $500–$5,000 per month, while established ones in high-demand niches (programming, digital marketing) can surpass $100,000 annually.
+- E-books publishers that average ~$1,800/month in royalties, with some hitting $20,000+ annually by targeting medium-content niches (puzzles, coloring books).
+
+Conversely,
+
+- Medium writers earn under $100, with only the top 1% earn $5,000–$30,000 monthly.
+- Substack creators income is directly tied to paid subscribers-- with ~100 subscribers, creators can earn anywhere from $350 to $6,500 per month, depending on tiering.
+
+Compare with ad revenue from,
+
+- Outlets with 1M+ monthly visitors can earn hundreds of thousands per year in ad revenue, while smaller ones average ~$3,000–$5,000 for every 100,000 mobile visitors.
+
+## Problem Statement
+These numbers show both the opportunity and the precariousness of creator income. Despite attracting large audiences, most creators earn little. The gap is not just content-related however— it’s financial infrastructure. Revenue is lost at the payment layer due to:
+- Audience friction: Card failures, FX markups, geo-restrictions.
+- Creator dependence: Reliance on Stripe, PayPal, or local card rails.
+- Platform overhead: Managing wallets, native tokens, and fragmented payout rails.
+
+Through the simplicity of PUBSTACK's checkout flow; we hypothesize that introducing gasless USDC payments can break new ground in creator monetization by:
+- Offering global, instant settlement without reliance on card networks.
+- Expanding audiences by removing geographic payment barriers.
+- Reducing overhead for creators and platforms alike.
+
+## Solution: PUBSTACK
+
+PUBSTACK is a creator-focused platform that integrates Circle Wallets and Gas Station to deliver frictionless, borderless payments in USDC.
+
+### Key Features:
+
+- Gasless Checkout: Buyers pay in USDC. Native gas fees are sponsored via Circle Paymaster, ensuring a smooth, one-step checkout.
+- Creator Wallets: Each creator gets a secure, programmable wallet powered by Circle on signup. No seed phrases.
+- Global Accessibility: Audiences can pay from anywhere, without dependency on card networks or local rails.
+- Seamless Settlement: Payments arrive instantly in USDC, reducing reliance on intermediaries like Stripe or PayPal.
+
+Value Delivered:
+- For Audiences: Seamless, card-free global checkout with stable USDC.
+- For Creators: Higher conversion, instant earnings, lower dependency on centralized payment providers.
+- For Platforms: Simplified wallet + payment infrastructure, reduced support overhead.
+
+How It Works
+- User selects a digital product (ebook, course module).
+- Checkout prompts a USDC payment → PUBSTACK abstracts gas via Circle Paymaster.
+- USDC is routed directly to the creator’s wallet, provisioned via Circle’s Wallet-as-a-Service.
+- Creator accesses funds instantly, with no payout delays or middlemen.
+
+## CORE FUNCTIONS:
+
+### 1. User Onboarding & Authentication
+- Email/password registration and login
+- Seamless wallet creation during onboarding
+- Session management with JWT tokens
+- PIN security setup for wallet operations
+
+### 2. Multi-Chain Wallet Management
+- Programmable wallet creation across 4 testnets:
+  - Polygon Amoy
+  - Ethereum Sepolia
+  - Avalanche Fuji
+  - Solana Devnet
+- Native token and USDC balance monitoring
+- Deposit addresses and QR codes
+- Transaction history with status tracking
+
+### 3. Creator Marketplace
+- Product catalog for digital goods (ebooks, mentorship)
+- Shopping cart with persistent storage
+- Shopping cart experience with quantity management
+- Merchant-specific payment addresses per blockchain
+
+### 4. Gasless Checkout Flow
+- USDC balance validation pre-purchase
+- One-click gasless transactions
+- Real-time payment status updates
+- Automated order confirmation and cart clearing
+
+### 5. Creator Dashboard
+- Sales analytics and revenue tracking
+- Payment method analytics (USDC vs traditional)
+-Gas savings calculations
+-Customer management and order history
 
 ## Overview
 
