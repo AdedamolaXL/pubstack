@@ -1,6 +1,6 @@
 # PUBSTACK
 
-Check out the [live demo](https://user-controlled-wallets-sample-app.circle.com/) first to see what to expect!
+Check out the [live demo](https://youtu.be/DrwDdtCmXGw) first to see what to expect! and the link to the [server](https://github.com/AdedamolaXL/pubstack-server-node) if you are feeling geeky :)
 
 ## Problem Background
 
