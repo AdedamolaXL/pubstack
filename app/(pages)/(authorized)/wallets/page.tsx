@@ -1,11 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useWallets } from "@/app/axios";
-import { useEffect, useState } from "react";
 import { LoadingWrapper } from "@/app/components";
 import { UseQueryOptions } from "react-query";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function WalletPage() {
   const router = useRouter();
@@ -22,11 +22,11 @@ export default function WalletPage() {
       return false;
     }
   };
+  
   const { data: wallets } = useWallets(undefined, refetchIntervalFn);
 
   useEffect(() => {
     if (wallets && wallets.data?.wallets?.length > 0) {
-      // redirect to the first wallet
       const firstWallet = wallets.data.wallets[0];
       const walletId = firstWallet.id;
       router.push(`/wallets/${walletId}`);

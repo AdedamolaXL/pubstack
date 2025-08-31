@@ -2,13 +2,7 @@ import { WalletActivityDetails } from "@/app/containers/WalletActivityDetails";
 
 type WalletActivityDetailsParams = {
   params: {
-    /*
-     * Wallet id.
-     */
     id: string;
-    /*
-     * Transaction id.
-     */
     transactionId: string;
   };
 };

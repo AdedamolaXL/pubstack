@@ -1,4 +1,3 @@
-import { NextAuthOptions, Session, User } from "next-auth";
 import { axios } from "@/app/axios";
 import {
   GasFeeObject,
@@ -7,6 +6,7 @@ import {
   TransactionTypeEnum,
 } from "./types";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NextAuthOptions, Session, User } from "next-auth";
 
 export const calculateSum = (amounts: string[]): string => {
   const finalSum = amounts.reduce((sum, amount) => Number(amount) + sum, 0);

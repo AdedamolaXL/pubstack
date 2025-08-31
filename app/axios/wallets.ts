@@ -1,6 +1,5 @@
 "use client";
 import { axios } from "@/app/axios";
-import { useMutation, useQuery } from "react-query";
 import {
   BlockchainEnum,
   TokenBalance,
@@ -8,6 +7,7 @@ import {
   WalletBalancesInput,
   WalletsInput,
 } from "../shared/types";
+import { useMutation, useQuery } from "react-query";
 
 const walletBalanceHelper = async (
   id: string,

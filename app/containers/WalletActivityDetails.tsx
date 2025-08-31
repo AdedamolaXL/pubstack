@@ -1,25 +1,21 @@
 "use client";
-
+import { useWallet } from "@/app/axios";
+import {
+  LoadingWrapper,
+  BackButton,
+  CopyButton,
+} from "@/app/components";
 import {
   findChipColor,
   formatDate,
   getTransactionOperation,
   roundNum,
 } from "@/app/shared/utils";
-import { useRouter } from "next/navigation";
 import { useTokenDetailsQuery } from "@/app/axios/tokens";
 import { useTransactionQuery } from "@/app/axios/transactions";
 import { blockchainNames } from "../shared/types";
 import { useMemo } from "react";
-
-import { useWallet } from "@/app/axios";
-import {
-  LoadingWrapper,
-  Content,
-  BackButton,
-  CopyButton,
-} from "@/app/components";
-import { TextField } from "../components/TextField";
+import { useRouter } from "next/navigation";
 
 interface WalletActivityDetailsProps {
   walletId: string;

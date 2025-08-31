@@ -1,7 +1,7 @@
-import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
+import { Token } from "@/app/shared/types";
 import { tokenHelper } from "@/app/shared/utils";
 import Image from "next/image";
-import { Token } from "@/app/shared/types";
+import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
 
 interface TokenCardProps {
   token?: Token;
@@ -9,9 +9,6 @@ interface TokenCardProps {
   onClick?: () => void;
 }
 
-/**
- * Token balance card.
- */
 export const TokenCard: React.FC<TokenCardProps> = ({
   token,
   amount,

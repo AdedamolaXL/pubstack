@@ -1,9 +1,6 @@
-// app/context/CardContext.tsx
 'use client';
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-// Update product interface to support both eBooks and mentorship
 export interface Product {
   id: string;
   name: string;
@@ -55,7 +52,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return [];
   });
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('pubstack-cart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -132,7 +128,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Export the useCart hook
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {
@@ -141,5 +136,4 @@ export const useCart = () => {
   return context;
 };
 
-// Default export for easier imports
 export default CartContext;

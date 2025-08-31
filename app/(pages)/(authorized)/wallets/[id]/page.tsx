@@ -2,9 +2,6 @@ import { WalletDetails } from "@/app/containers/WalletDetails";
 
 type WalletDetailsParams = {
   params: {
-    /*
-     * Wallet id.
-     */
     id: string;
   };
 };

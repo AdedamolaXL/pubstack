@@ -2,9 +2,6 @@ import { SelectToken } from "@/app/containers/Wallets/Send";
 
 interface WalletSendProps {
   params: {
-    /*
-     * Wallet id.
-     */
     id: string;
   };
 }

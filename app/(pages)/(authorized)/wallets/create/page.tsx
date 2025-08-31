@@ -5,16 +5,15 @@ import { BackButton, Content } from "@/app/components";
 import { useW3sContext } from '@/app/providers/W3sProvider'
 import { BlockchainEnum, blockchainNames } from "@/app/shared/types";
 import { blockchainMeta } from "@/app/shared/utils";
-import { CheckIcon } from "@heroicons/react/16/solid";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { CheckIcon } from "@heroicons/react/16/solid";
 
 export default function CreateWalletPage() {
   const createWalletMutation = useCreateWallet();
   const router = useRouter();
   const { client } = useW3sContext();
-
   const previousWalletsCount = useRef<number>(0);
   const [selected, setSelected] = useState<BlockchainEnum>();
   const [loading, setLoading] = useState(false);
@@ -36,7 +35,6 @@ export default function CreateWalletPage() {
 
   const createLoading = createWalletMutation.isLoading || loading;
 
-  // Group wallets by blockchain to show which ones user already has
   const existingBlockchains = walletsQuery.data?.data.wallets.map(w => w.blockchain) || [];
 
   return (

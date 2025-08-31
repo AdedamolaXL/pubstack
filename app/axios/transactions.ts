@@ -1,14 +1,13 @@
 "use client";
 import { axios } from "@/app/axios";
-import { useQuery } from "react-query";
-import { useMutation } from "react-query";
 import {
   EstimateFeeInput,
   EstimateFeeResponse,
   Transaction,
 } from "../shared/types";
+import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 
-// Get transactions query
 const transactionsHelper = async (walletId: string) => {
   const response = await axios.get<{
     transactions: Transaction[];
@@ -24,7 +23,6 @@ export const useTransactionsQuery = (walletId: string) => {
   });
 };
 
-// Get transaction details query
 const transactionHelper = async (transactionId: string) => {
   const response = await axios.get<{
     transaction: Transaction;
@@ -40,7 +38,6 @@ export const useTransactionQuery = (transactionId: string) => {
   });
 };
 
-// Estimate Transfer Fee
 const estimateFeeHelper = async (input: EstimateFeeInput) => {
   const response = await axios.post<EstimateFeeResponse>(
     "/transactions/transfer/estimateFee",
@@ -52,7 +49,6 @@ const estimateFeeHelper = async (input: EstimateFeeInput) => {
 
 export const useEstimateFeeMutation = () => useMutation(estimateFeeHelper);
 
-// Validate address for transaction mutation
 const validateAddressMutationHelper = async ({
   address,
   blockchain,
@@ -74,7 +70,6 @@ const validateAddressMutationHelper = async ({
 export const useValidateAddressMutation = () =>
   useMutation(validateAddressMutationHelper);
 
-// Create transaction mutation
 const createTransferHelper = async (bodyParams: {
   destinationAddress: string;
   tokenId: string;

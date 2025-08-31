@@ -5,12 +5,12 @@ import {
   useWallet,
 } from "@/app/axios";
 import { LoadingWrapper } from "@/app/components";
-import Image from "next/image";
+import { getTransactionOperation, formatDate } from "../shared/utils";
 import { Transaction } from "../shared/types";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MegaphoneIcon, ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
 import { useMemo } from "react";
-import { getTransactionOperation, formatDate } from "../shared/utils";
 
 interface WalletActivityProps {
   id: string;

@@ -1,9 +1,6 @@
 import NextAuth from "next-auth";
 
 declare module "next-auth" {
-  /**
-   * Override the default next-auth session type
-   */
   export interface User {
     userId: string;
     userToken: string;

@@ -1,13 +1,13 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
 import { Content } from '@/app/components';
+import { useTransactionQuery } from '@/app/axios/transactions';
+import { useWallet } from '@/app/axios';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, Suspense } from 'react';
-import { useWallet } from '@/app/axios';
-import { useTransactionQuery } from '@/app/axios/transactions';
 
-// Create a component that uses useSearchParams
+
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const walletId = searchParams.get('wallet');
@@ -15,11 +15,8 @@ function CheckoutSuccessContent() {
   const [walletAddress, setWalletAddress] = useState('');
   const challengeId = searchParams.get('challengeId');
   const txHash = searchParams.get('txHash');
-  const [transaction, setTransaction] = useState<any>(null);
-  
-  // Get wallet details to show the actual address
+  const [transaction, setTransaction] = useState<any>(null); 
   const { data: wallet } = useWallet(walletId || '');
-
   const { data: txData } = useTransactionQuery(txHash || '');
 
   useEffect(() => {

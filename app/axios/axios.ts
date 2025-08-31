@@ -13,7 +13,6 @@ const axios = ax.create({
 axios.interceptors.request.use(async (request) => {
   const tokenDefault = axios.defaults.headers.token;
 
-  // if token header not set
   if (!Boolean(tokenDefault)) {
     const session = await getSession({
       req: request,

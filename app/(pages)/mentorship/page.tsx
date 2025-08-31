@@ -1,11 +1,9 @@
 'use client';
-import { Metadata } from 'next';
 import Header from '@/app/components/Header';
 import { Footer } from '@/app/components/Footer';
-import Image from 'next/image';
-import Link from 'next/link';
-import { CheckCircleIcon, ClockIcon, UserGroupIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 import { useCart } from '@/app/context/CardContext';
+import Image from 'next/image';
+import { CheckCircleIcon, ClockIcon, UserGroupIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 
 const mentorshipOfferings = [
   {
@@ -13,7 +11,7 @@ const mentorshipOfferings = [
     type: 'class',
     title: 'Fiction Writing Masterclass',
     description: 'A comprehensive 8-week course covering character development, plot structure, and world-building techniques.',
-    price: 2.99,
+    price: 10.00,
     duration: '8 weeks',
     format: 'Group sessions (max 10 students)',
     features: [
@@ -31,7 +29,7 @@ const mentorshipOfferings = [
     type: 'class',
     title: 'Self-Publishing Intensive',
     description: 'Learn how to successfully self-publish your work, from manuscript to market in 4 weeks.',
-    price: 1.99,
+    price: 10.00,
     duration: '4 weeks',
     format: 'Group sessions (max 8 students)',
     features: [
@@ -49,7 +47,7 @@ const mentorshipOfferings = [
     type: 'one-on-one',
     title: 'Manuscript Critique & Development',
     description: 'Detailed analysis of your complete manuscript with actionable feedback and revision strategies.',
-    price: 4.50,
+    price: 10.00,
     duration: '4 sessions',
     format: 'One-on-one',
     features: [
@@ -67,7 +65,7 @@ const mentorshipOfferings = [
     type: 'one-on-one',
     title: 'Career Strategy Session',
     description: 'Personalized guidance on building your writing career, branding, and long-term planning.',
-    price: 1.50,
+    price: 10.00,
     duration: '90 minutes',
     format: 'One-on-one',
     features: [
@@ -86,7 +84,6 @@ export default function Mentorship() {
   const { addToCart } = useCart();
 
   const handleAddToCart = (offering: any) => {
-    // Convert mentorship offering to cart product format
     const cartProduct = {
       id: offering.id,
       name: offering.title,
@@ -226,25 +223,6 @@ export default function Mentorship() {
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <h3 className="text-lg font-medium text-dune-900 mb-2">What&rsquo;s your cancellation policy?</h3>
-              <p className="text-dune-700">You can cancel or reschedule 1-on-1 sessions with 24 hours notice. For group classes, we offer a full refund if canceled at least 7 days before the start date.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-dune-900 mb-2">Do you offer payment plans?</h3>
-              <p className="text-dune-700">Yes, we offer payment plans for all classes over $200. Please contact us for details.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-serif font-bold text-dune-900 mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-4 max-w-3xl mx-auto">
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-dune-900 mb-2">How do the group classes work?</h3>
-              <p className="text-dune-700">Group classes are conducted via video conference with a maximum of 10 participants. Each session includes instruction, exercises, and Q&A. Recordings are available if you miss a session.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-dune-900 mb-2">Do you have a cancellation policy?</h3>
               <p className="text-dune-700">You can cancel or reschedule 1-on-1 sessions with 24 hours notice. For group classes, we offer a full refund if canceled at least 7 days before the start date.</p>
             </div>
             <div className="bg-white p-6 rounded-lg border border-gray-200">

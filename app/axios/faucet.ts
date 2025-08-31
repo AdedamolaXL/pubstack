@@ -1,7 +1,7 @@
 "use client";
 import { axios } from "@/app/axios";
-import { useMutation } from "react-query";
 import { FaucetDripInput } from "../shared/types";
+import { useMutation } from "react-query";
 
 const faucetDripHelper = (input: FaucetDripInput) => {
   return axios.post(`/faucet/drips`, input);

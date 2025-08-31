@@ -4,13 +4,7 @@ import { ReactElement } from 'react';
 
 interface WalletSendTokenProps {
   params: {
-    /*
-     * Wallet id.
-     */
     id: string;
-    /*
-     * Token name.
-     */
     tokenName: string;
   };
 }

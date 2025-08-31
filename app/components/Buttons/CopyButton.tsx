@@ -6,7 +6,7 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 interface CopyButtonProps {
   copyValue: string;
   copyLabel?: string;
-  variant?: 'plain' | 'ghost' | 'solid'; // Define possible variants directly
+  variant?: 'plain' | 'ghost' | 'solid';
   className?: string;
 }
 
@@ -21,7 +21,6 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
   const setTimerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    // Clear the interval when the component unmounts
     return () => {
       if (setTimerRef.current) {
         clearTimeout(setTimerRef.current);
@@ -40,7 +39,6 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
     }, COPY_CLIPBOARD_RESET_INTERVAL);
   }, [copyValue]);
 
-  // Base classes for different variants
   const getVariantClasses = () => {
     switch (variant) {
       case 'ghost':

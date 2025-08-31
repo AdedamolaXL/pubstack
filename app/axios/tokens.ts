@@ -1,7 +1,7 @@
 "use client";
 import { axios } from "@/app/axios";
-import { useQuery } from "react-query";
 import { Token } from "../shared/types";
+import { useQuery } from "react-query";
 
 const tokenDetailsHelper = async (tokenId: string) => {
   const response = await axios.get<{

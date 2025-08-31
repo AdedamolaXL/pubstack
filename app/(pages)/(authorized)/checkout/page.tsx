@@ -1,24 +1,23 @@
 'use client';
 import { useCart } from '@/app/context/CardContext';
-import { useSession } from 'next-auth/react';
 import { useWallets, useWallet, useWalletBalances } from '@/app/axios';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { BlockchainEnum, blockchainNames } from '@/app/shared/types';
-import { Content, LoadingWrapper } from '@/app/components';
-import Image from 'next/image';
+import { LoadingWrapper } from '@/app/components';
 import { useCreateTransferMutation } from '@/app/axios/transactions';
 import { useW3sContext } from '@/app/providers/W3sProvider';
-import { blockchainMeta, tokenHelper } from '@/app/shared/utils';
+import { blockchainMeta } from '@/app/shared/utils';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
-// Define a type for supported testnet blockchains
+
 type SupportedTestnet = 
   | BlockchainEnum.MATIC_AMOY 
   | BlockchainEnum.ETH_SEPOLIA 
   | BlockchainEnum.AVAX_FUJI 
   | BlockchainEnum.SOL_DEVNET;
 
-// Merchant addresses by blockchain (only testnets)
 const MERCHANT_ADDRESSES: Record<SupportedTestnet, string> = {
   [BlockchainEnum.MATIC_AMOY]: '0xce8686244f66cd6576180ddb406a065f7f6e16f3',
   [BlockchainEnum.ETH_SEPOLIA]: '0x75efbc20e4b1f9a5edd3b03c7b179e8710991458',
@@ -26,7 +25,6 @@ const MERCHANT_ADDRESSES: Record<SupportedTestnet, string> = {
   [BlockchainEnum.SOL_DEVNET]: 'D8j86vqE3ERGb2Mt1aA6xPecb4L3sagfUNuD3JLRz5FC',
 };
 
-// Type guard to check if a blockchain is supported
 const isSupportedBlockchain = (blockchain: string): blockchain is SupportedTestnet => {
   return Object.keys(MERCHANT_ADDRESSES).includes(blockchain);
 };
@@ -40,11 +38,8 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { client } = useW3sContext();
-  
-  // Get the selected wallet details
   const { data: selectedWallet } = useWallet(selectedWalletId || '');
   
-  // Get the USDC token balance for the selected wallet
   const { data: walletBalances } = useWalletBalances(
     selectedWalletId || '',
     { name: 'USDC' }
@@ -58,7 +53,6 @@ export default function CheckoutPage() {
     }
   }, [status, router]);
 
-  // Get all wallets with USDC balance
   const walletsWithBalance = wallets?.data?.wallets?.map(wallet => {
     return {
       ...wallet,
@@ -72,13 +66,11 @@ export default function CheckoutPage() {
       return;
     }
     
-    // Check if the wallet's blockchain is supported
     if (!isSupportedBlockchain(selectedWallet.data.wallet.blockchain)) {
       setError('Merchant does not accept payments on this blockchain');
       return;
     }
-    
-    // Find USDC token details
+
     const usdcTokenBalance = walletBalances?.data?.tokenBalances[0];
     if (!usdcTokenBalance) {
       setError('USDC token not found in wallet');
@@ -86,15 +78,13 @@ export default function CheckoutPage() {
     }
     
     const usdcToken = usdcTokenBalance.token;
-    
-    // Check if wallet has sufficient USDC balance
+
     const usdcBalance = parseFloat(usdcTokenBalance.amount);
     if (usdcBalance < cartTotal) {
       setError(`Insufficient USDC balance. You need ${cartTotal} USDC but only have ${usdcBalance.toFixed(2)}`);
       return;
     }
     
-    // Get merchant address for the selected wallet's blockchain
     const merchantAddress = MERCHANT_ADDRESSES[selectedWallet.data.wallet.blockchain as SupportedTestnet];
      if (!merchantAddress) {
       setError('Merchant does not accept payments on this blockchain');
@@ -113,8 +103,7 @@ export default function CheckoutPage() {
         feeLevel: "LOW",
         cartTotal: cartTotal
       });
-      
-      // Create actual payment transaction
+
       const { challengeId } = await createTransfer.mutateAsync({
         destinationAddress: merchantAddress,
         tokenId: usdcToken.id,
@@ -125,13 +114,11 @@ export default function CheckoutPage() {
 
       console.log('Transaction initiated with challengeId:', challengeId);
       
-      // Execute the transaction
       client?.execute(challengeId, (error) => {
         if (error) {
           setError('Payment failed: ' + error.message);
           setIsProcessing(false);
         } else {
-          // Only clear cart and redirect on success
           clearCart();
           router.push(`/checkout/success?wallet=${selectedWalletId}&amount=${cartTotal}&challengeId=${challengeId}`);
         }
@@ -243,7 +230,6 @@ export default function CheckoutPage() {
   );
 }
 
-// Component to display wallet with balance and handle selection
 const WalletBalanceItem = ({ 
   wallet, 
   isSelected, 

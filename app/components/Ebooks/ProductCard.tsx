@@ -1,9 +1,8 @@
 'use client';
-
-import Image from 'next/image'
 import { Product } from '@/app/components/Ebooks/ProductGrid';
-import { StarIcon } from '@heroicons/react/24/solid';
 import { useCart } from '@/app/context/CardContext';
+import { StarIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image'
 
 interface ProductCardProps {
   product: Product;

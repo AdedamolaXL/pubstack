@@ -2,9 +2,9 @@
 import { CopyButton } from "@/app/components";
 import { useW3sContext } from '@/app/providers/W3sProvider'
 import { blockchainMeta } from "@/app/shared/utils";
-import { signOut } from "next-auth/react";
 import { useRestorePinMutation, useWallet, useWallets } from "@/app/axios";
 import { blockchainNames } from "@/app/shared/types";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -35,7 +35,6 @@ export default function WalletLayout({
   const restorePin = useRestorePinMutation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   const blockchainInfo = blockchainMeta(wallet?.data.wallet.blockchain);
   const walletAddress = wallet?.data.wallet.address ?? "";
 

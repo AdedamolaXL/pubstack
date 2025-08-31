@@ -1,14 +1,14 @@
 "use client";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useW3sContext } from "../../providers/W3sProvider";
+import { Content } from "..";
+import { TextField } from "@/app/components/TextField";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { TextField } from "@/app/components/TextField";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Content } from "..";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const formSchema = yup.object({
   email: yup
@@ -24,9 +24,6 @@ const formSchema = yup.object({
 type FormInputs = yup.InferType<typeof formSchema>;
 
 interface AuthenticationFormProps {
-  /**
-   * Is the form a sign in form
-   */
   isSignIn?: boolean;
 }
 
@@ -51,8 +48,6 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           if (error) {
             setFormMessage("An error occurred on PIN Setup. Please try again.");
           } else if (result) {
-            // result will be undefined if popup is closed
-            // only navigate to wallets if PIN setup complete
             router.push("/wallets");
           }
         });

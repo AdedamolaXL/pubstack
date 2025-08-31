@@ -5,3 +5,5 @@ export * from "./Content";
 export * from "./Footer";
 export * from "./Loading/LoadingWrapper";
 export * from "./TextField";
+export * from "./Header"
+export * from "./Footer"

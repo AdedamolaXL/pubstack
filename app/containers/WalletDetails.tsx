@@ -1,8 +1,5 @@
 "use client";
-import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
-import FaucetSvg from "@/public/Faucet.svg"
 import { TokenBalance } from "@/app/shared/types";
-import { useRouter } from "next/navigation";
 import {
   useWallet,
   useWalletBalances,
@@ -12,7 +9,10 @@ import { LoadingWrapper, TokenCard } from "@/app/components";
 import { useCallback, useMemo, useState } from "react";
 import { blockchainMeta, tokenHelper } from "../shared/utils";
 import { WalletActivity } from "./WalletActivity";
+import FaucetSvg from "@/public/Faucet.svg"
 import Image from "next/image";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
+import { useRouter } from "next/navigation";
 
 interface WalletDetailsProps {
   id: string;
@@ -23,7 +23,6 @@ type TabType = 'tokens' | 'activity';
 export const WalletDetails: React.FC<WalletDetailsProps> = ({ id }) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('tokens');
-
   const { data: balanceData, isLoading } = useWalletBalances(id);
   const { data: walletData } = useWallet(id);
   const dripFaucet = useFaucetDripMutation();
@@ -34,7 +33,6 @@ export const WalletDetails: React.FC<WalletDetailsProps> = ({ id }) => {
     }
 
     const sorted = balanceData.data.tokenBalances.sort((a, b) => {
-      // if native token with amount go first
       if (a.token.isNative && parseFloat(a.amount) > 0) {
         return -1;
       }

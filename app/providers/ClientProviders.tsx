@@ -1,11 +1,10 @@
 "use client";
+import { W3sProvider } from "./W3sProvider";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { W3sProvider } from "./W3sProvider";
 import React from "react";
 import { ReactNode } from "react";
 
-// Create a single instance of QueryClient
 const queryClient = new QueryClient();
 
 export const ClientProviders = ({ children }: { children: ReactNode }) => {

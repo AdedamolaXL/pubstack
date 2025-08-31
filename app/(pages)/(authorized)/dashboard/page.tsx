@@ -1,25 +1,20 @@
-// app/(pages)/(authorized)/dashboard/page.tsx
 'use client';
-
+import { LoadingWrapper } from '@/app/components';
+import Header from '@/app/components/Header';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { 
   ChartBarIcon, 
   BookOpenIcon, 
-  UsersIcon, 
   CurrencyDollarIcon,
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
-  DocumentTextIcon,
   AcademicCapIcon,
   VideoCameraIcon,
   GiftIcon
 } from '@heroicons/react/24/outline';
-import { LoadingWrapper } from '@/app/components';
-import Header from '@/app/components/Header';
 
-// Mock data for author dashboard
 const dashboardData = {
   overview: {
     totalRevenue: 12475.50,
@@ -32,7 +27,7 @@ const dashboardData = {
     salesChange: 18.7,
     avgSaleChange: 3.1,
     conversionChange: 2.2,
-    gasSavings: 247.30 // Estimated gas savings for users
+    gasSavings: 247.30 
   },
   recentSales: [
     { id: 'SALE-001', customer: 'John Reader', amount: 12.99, product: 'Whispers of the Forgotten', type: 'ebook', status: 'completed', date: '2023-10-15' },

@@ -2,9 +2,6 @@ import { Deposit } from "@/app/containers/Deposit";
 
 type DepositParams = {
   params: {
-    /*
-     * Wallet id.
-     */
     id: string;
   };
 };

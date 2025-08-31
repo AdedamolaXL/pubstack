@@ -1,9 +1,8 @@
 "use client";
-
+import { useWallet } from "@/app/axios";
+import { BackButton, CopyButton } from "@/app/components";
 import { useRouter } from "next/navigation";
 import QRCode from "react-qr-code";
-import { useWallet } from "@/app/axios";
-import { Content, BackButton, CopyButton } from "@/app/components";
 
 interface DepositProps {
   walletId: string;

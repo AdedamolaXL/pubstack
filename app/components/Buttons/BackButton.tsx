@@ -7,7 +7,7 @@ export const BackButton = ({
 }: {
   children: React.ReactNode;
   onClick: () => void;
-  className?: string; // Add this line
+  className?: string; 
 }) => {
   return (
     <div className={`flex items-center gap-1 ${className}`}> {/* Add className here */}
